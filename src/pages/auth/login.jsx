@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import customAxios from "../../config/requast";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { saveState } from "../../lib/storage";
+import { loadState, saveState } from "../../lib/storage";
 
 export const Login = () => {
   const {
@@ -18,17 +18,17 @@ export const Login = () => {
 
   const submit = (data) => {
     customAxios
-      .post("/auth", data)
+      .post("login", data)
       .then((res) => {
         saveState("user", res.data);
-        console.log(res);
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
         toast.error(error.response.data);
       })
       .finally(() => {
-        if (saveState("user")) return navigate("/product");
+        if (loadState("user")) navigate("/app");
       });
     reset();
   };
@@ -48,14 +48,16 @@ export const Login = () => {
           <div>
             <TextField
               fullWidth
+              // value="alisherbek@mail.com"
               placeholder="Email"
               sx={{ mb: "10px" }}
-              {...register("username", { required: true })}
+              {...register("email", { required: true })}
             />
           </div>
           <div>
             <TextField
               fullWidth
+              // value="123456"
               type="password"
               placeholder="Password"
               sx={{ mb: "10px" }}
