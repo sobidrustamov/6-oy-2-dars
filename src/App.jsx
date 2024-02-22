@@ -6,6 +6,7 @@ import { EditProduct } from "./pages/product/edit-product";
 import { CreateProduct } from "./pages/product/create-product";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Register } from "./pages/auth/register";
 
 function App() {
   return (
@@ -13,10 +14,11 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/app" element={<MainLayout />}>
           <Route index element={<ProductList />} />
           <Route path="create" element={<CreateProduct />} />
-          <Route path="edit" element={<EditProduct />} />
+          <Route path="edit/:id" element={<EditProduct />} />
         </Route>
       </Routes>
     </div>

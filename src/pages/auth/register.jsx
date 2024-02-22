@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { loadState, saveState } from "../../lib/storage";
 
-export const Login = () => {
+export const Register = () => {
   const {
     reset,
     register,
@@ -18,7 +18,7 @@ export const Login = () => {
 
   const submit = (data) => {
     customAxios
-      .post("login", data)
+      .post("/register", data)
       .then((res) => {
         saveState("user", res.data);
         console.log(res.data);
@@ -33,8 +33,8 @@ export const Login = () => {
     reset();
   };
 
-  const toRegister = () => {
-    navigate("/register");
+  const toLogin = () => {
+    navigate("/");
   };
   return (
     <Stack
@@ -50,12 +50,27 @@ export const Login = () => {
       <Stack width="500px" bgcolor="#fff" borderRadius="15px" padding="20px">
         <form onSubmit={handleSubmit(submit)}>
           <Typography variant="h4" component="h4" my="10px" textAlign="center">
-            Login
+            Register
           </Typography>
           <div>
             <TextField
               fullWidth
-              // value="alisherbek@mail.com"
+              placeholder="Firstname"
+              sx={{ mb: "10px" }}
+              {...register("firstname", { required: true })}
+            />
+          </div>
+          <div>
+            <TextField
+              fullWidth
+              placeholder="Lastname"
+              sx={{ mb: "10px" }}
+              {...register("lastname", { required: true })}
+            />
+          </div>
+          <div>
+            <TextField
+              fullWidth
               placeholder="Email"
               sx={{ mb: "10px" }}
               {...register("email", { required: true })}
@@ -64,20 +79,28 @@ export const Login = () => {
           <div>
             <TextField
               fullWidth
-              // value="123456"
               type="password"
               placeholder="Password"
               sx={{ mb: "10px" }}
               {...register("password", { required: true })}
             />
           </div>
+          <div>
+            <TextField
+              fullWidth
+              type="number"
+              placeholder="Age"
+              sx={{ mb: "10px" }}
+              {...register("age")}
+            />
+          </div>
           <Button type="submit" fullWidth variant="contained">
             Login
           </Button>
           <p style={{ padding: "10px" }}>
-            No account yet?{" "}
-            <Link sx={{ color: "blue" }} onClick={toRegister}>
-              Create One
+            Already have an account?{" "}
+            <Link sx={{ color: "blue" }} onClick={toLogin}>
+              Sign In
             </Link>
           </p>
         </form>

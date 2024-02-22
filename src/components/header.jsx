@@ -1,7 +1,10 @@
 import { Stack, Button } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <Stack
       sx={{
@@ -17,7 +20,15 @@ export const Header = () => {
       flexWrap="wrap"
     >
       <h2>Logo</h2>
-      <Button variant="outlined">Log out</Button>
+      <Button
+        onClick={() => {
+          localStorage.removeItem("user");
+          navigate("/");
+        }}
+        variant="outlined"
+      >
+        Log out
+      </Button>
     </Stack>
   );
 };
